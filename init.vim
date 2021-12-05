@@ -15,8 +15,15 @@ set background = "dark"
 set termguicolors
 colorscheme nord
 
-"lua require('rust-tools').setup({})
-lua require('telescope').setup({});
+lua require('rust-tools').setup({})
+
+lua << EOF
+require('telescope').setup{
+	defaults = {
+	}
+}
+EOF
+
 
 " leader key mapping
 lua vim.g.mapleader = " "
@@ -24,4 +31,5 @@ lua vim.g.mapleader = " "
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 
-luafile lspconf.lua
+luafile ~/.config/nvim/lspconf.lua
+
