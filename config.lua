@@ -1,4 +1,31 @@
+local use = vim.fn['plug#']
+
+require('plugins')
+require('telescope').setup{}
+
 local nvim_lsp = require('lspconfig')
+
+vim.cmd [[packadd packer.nvim]]
+
+
+-- Leader
+vim.g.mapleader = " "
+
+-- Vim commands (todo: convert)
+vim.cmd [[
+	set termguicolors
+	set background = "dark"
+  	colorscheme nord
+	set completeopt=menu,menuone,noselect
+]]
+
+-- Custom leader mappings
+vim.api.nvim_set_keymap('n', '<Leader>ff', ':Telescope find_files<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>fg', ':Telescope live_grep<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>ww', ':w<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>wq', ':wq<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>qq', ':q!', {noremap = true})
+
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -39,10 +66,10 @@ end
 -- map buffer local keybindings when the language server attaches
 
   -- Setup nvim-cmp.
-  local cmp = require'cmp'
+local cmp = require'cmp'
 
-  cmp.setup({
-    snippet = {
+cmp.setup({
+   snippet = {
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
         vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
@@ -91,14 +118,6 @@ end
 
   -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
---  require('lspconfig')['rust_analyzer'].setup {
---    on_attach = on_attach,
---    capabilities = capabilities,
---    flags = {
---      debounce_text_changes = 150,
---    }
---  }
 
   require("rust-tools").setup({ 
 	server = {
