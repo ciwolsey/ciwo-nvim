@@ -1,12 +1,9 @@
-local use = vim.fn['plug#']
-
 require('plugins')
 require('telescope').setup{}
 
 local nvim_lsp = require('lspconfig')
 
 vim.cmd [[packadd packer.nvim]]
-
 
 -- Leader
 vim.g.mapleader = " "
@@ -18,14 +15,6 @@ vim.cmd [[
   	colorscheme nord
 	set completeopt=menu,menuone,noselect
 ]]
-
--- Custom leader mappings
-vim.api.nvim_set_keymap('n', '<Leader>ff', ':Telescope find_files<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<Leader>fg', ':Telescope live_grep<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<Leader>ww', ':w<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<Leader>wq', ':wq<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<Leader>qq', ':q!', {noremap = true})
-
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -116,16 +105,22 @@ cmp.setup({
     })
   })
 
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- Setup lspconfig.
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-  require("rust-tools").setup({ 
+require("rust-tools").setup({ 
 	server = {
-	    on_attach = on_attach,
-	    capabilities = capabilities,
-	    flags = {
-	      debounce_text_changes = 150,
-	    }
-    	}
-  })
+    		on_attach = on_attach,
+    		capabilities = capabilities,
+    		flags = {
+      			debounce_text_changes = 150,
+    		}
+	}
+})
 
+-- Custom leader mappings
+vim.api.nvim_set_keymap('n', '<Leader>ff', ':Telescope find_files<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>fg', ':Telescope live_grep<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>ww', ':w<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>wq', ':wq<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>qq', ':q!', {noremap = true})
