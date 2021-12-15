@@ -1,9 +1,13 @@
+vim.cmd [[packadd packer.nvim]]
+
+-- Simple requires
 require('plugins')
 require('telescope').setup{}
+require('nvim-autopairs').setup{}
 
+-- Assigned requires
 local nvim_lsp = require('lspconfig')
-
-vim.cmd [[packadd packer.nvim]]
+local cmp = require'cmp'
 
 -- Leader
 vim.g.mapleader = " "
@@ -25,12 +29,11 @@ local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
 
   require "lsp_signature".on_attach()
 
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -48,14 +51,12 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
 end
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-
-  -- Setup nvim-cmp.
-local cmp = require'cmp'
+-- Setup nvim-cmp.
+-- make it work with cmp
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
 
 cmp.setup({
    snippet = {
@@ -123,4 +124,5 @@ vim.api.nvim_set_keymap('n', '<Leader>ff', ':Telescope find_files<cr>', {noremap
 vim.api.nvim_set_keymap('n', '<Leader>fg', ':Telescope live_grep<cr>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<Leader>ww', ':w<cr>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<Leader>wq', ':wq<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<Leader>qq', ':q!', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>qq', ':q!<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>', ':vsp<cr>', {noremap = true})

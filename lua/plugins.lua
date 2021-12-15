@@ -26,4 +26,7 @@ return require('packer').startup(function()
 
         -- movement
         use 'ggandor/lightspeed.nvim'
+
+	-- autopairs
+	use 'windwp/nvim-autopairs'
 end)
