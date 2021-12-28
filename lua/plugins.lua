@@ -29,4 +29,23 @@ return require('packer').startup(function()
 
 	-- autopairs
 	use 'windwp/nvim-autopairs'
+
+	use 'kyazdani42/nvim-web-devicons'
+
+	-- Plenary (lua utility functions)
+	use {
+		'lewis6991/gitsigns.nvim',
+  		requires = { 'nvim-lua/plenary.nvim' },
+			config = function()
+    				require('gitsigns').setup()
+  			end
+	}
+
+	-- Treesitter
+	use {
+        	'nvim-treesitter/nvim-treesitter',
+        	run = ':TSUpdate'
+    	}
+
+	use 'nvim-treesitter/nvim-treesitter-textobjects'
 end)
