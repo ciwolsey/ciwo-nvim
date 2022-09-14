@@ -5,7 +5,6 @@ require('plugins')
 require('telescope').setup{}
 require('nvim-autopairs').setup{}
 
-
 -- Assigned requires
 local nvim_lsp = require('lspconfig')
 local cmp = require'cmp'
@@ -20,6 +19,14 @@ vim.cmd [[
   	colorscheme nord
 	set completeopt=menu,menuone,noselect
 ]]
+
+-- Netrw
+-- Set the list style to a tree
+vim.g.netrw_liststyle = 3
+-- Remove banner from top
+vim.g.netrw_banner = 0
+-- Change whether files are opened by default in splits/new tabs
+vim.g.netrw_browse_split = 3
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -122,38 +129,80 @@ require("rust-tools").setup({
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
-  -- textobjects plugin confiig
-  textobjects = {
-    select = {
-      enable = true,
-
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
-
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-        -- Or you can define your own textobjects like this
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<Leader>nn",
+          node_incremental = "<Leader>ni",
+          scope_incremental = "<Leader>ns",
+          node_decremental = "<Leader>nd",
+        },
       },
-    },
-  },
-  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-  ensure_installed = "maintained",
 
   -- Install languages synchronously (only applied to `ensure_installed`)
-  sync_install = false,
+  sync_install = true,
 
   -- List of parsers to ignore installing
-  ignore_install = { "javascript" },
+  ignore_install = {},
 
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
   },
+
+  playground = {
+    enable = true,
+    disable = {},
+    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+    persist_queries = false, -- Whether the query persists across vim sessions
+    keybindings = {
+      toggle_query_editor = 'o',
+      toggle_hl_groups = 'i',
+      toggle_injected_languages = 't',
+      toggle_anonymous_nodes = 'a',
+      toggle_language_display = 'I',
+      focus_language = 'f',
+      unfocus_language = 'F',
+      update = 'R',
+      goto_node = '<cr>',
+      show_help = '?',
+    },
+  }
 }
+
+-- Treesitter-textobjects
+require'nvim-treesitter.configs'.setup {
+    textobjects = {
+      select = {
+        enable = true,
+  
+        -- Automatically jump forward to textobj, similar to targets.vim
+        lookahead = true,
+  
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ["tsfo"] = "@function.outer",
+          ["tsfi"] = "@function.inner",
+          ["tsco"] = "@class.outer",
+          ["tsso"] = "@statement.outer",
+          -- you can optionally set descriptions to the mappings (used in the desc parameter of nvim_buf_set_keymap
+          ["tse"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+        
+        },
+        -- You can choose the select mode (default is charwise 'v')
+        selection_modes = {
+          ['@parameter.outer'] = 'v', -- charwise
+          ['@function.outer'] = 'V', -- linewise
+          ['@class.outer'] = '<c-v>', -- blockwise
+        },
+        -- If you set this to `true` (default is `false`) then any textobject is
+        -- extended to include preceding xor succeeding whitespace. Succeeding
+        -- whitespace has priority in order to act similarly to eg the built-in
+        -- `ap`.
+        include_surrounding_whitespace = true,
+      },
+    },
+  }
 
 -- Custom leader mappings
 -- Telescope
