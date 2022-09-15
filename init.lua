@@ -245,6 +245,16 @@ require'nvim-treesitter.configs'.setup {
   extensions = {}
 }
 
+-- Neotree
+require("neo-tree").setup({
+	window = {
+		position = "left"
+	},
+	filesystem = {
+		hijack_netrw_behavior = "open_default"
+	}
+});
+
 -- Custom leader mappings
 -- Telescope
 vim.api.nvim_set_keymap('n', '<Leader>tf', ':Telescope find_files<cr>', {noremap = true})
@@ -255,6 +265,7 @@ vim.api.nvim_set_keymap('n', '<Leader>tt', ':Telescope treesitter<cr>', {noremap
 vim.api.nvim_set_keymap('n', '<Leader>ww', ':w<cr>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<Leader>wq', ':wq<cr>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<Leader>qq', ':q!<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>b', ':Neotree toggle<cr>', {noremap = true})
 
 vim.api.nvim_set_keymap('n', '<C-j>', ':bnext<cr>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-x>', ':bd<cr>', {noremap = true})
