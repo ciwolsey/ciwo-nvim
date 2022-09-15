@@ -26,7 +26,7 @@ vim.g.netrw_liststyle = 3
 -- Remove banner from top
 vim.g.netrw_banner = 0
 -- Change whether files are opened by default in splits/new tabs
-vim.g.netrw_browse_split = 3
+--vim.g.netrw_browse_split = 3
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -204,12 +204,57 @@ require'nvim-treesitter.configs'.setup {
     },
   }
 
+  require('lualine').setup {
+  	options = {
+    		icons_enabled = true,
+		theme = 'auto',
+		component_separators = { left = '', right = ''},
+		section_separators = { left = '', right = ''},
+		disabled_filetypes = {
+		statusline = {},
+    		winbar = {},
+    	},
+    	ignore_focus = {},
+    	always_divide_middle = true,
+	globalstatus = false,
+	refresh = {
+		statusline = 1000,
+		tabline = 1000,
+		winbar = 1000,
+    	}
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
+
 -- Custom leader mappings
 -- Telescope
 vim.api.nvim_set_keymap('n', '<Leader>tf', ':Telescope find_files<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>tb', ':Telescope buffers<cr>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<Leader>tg', ':Telescope live_grep<cr>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<Leader>tt', ':Telescope treesitter<cr>', {noremap = true})
 -- Write, write quit, force quit
 vim.api.nvim_set_keymap('n', '<Leader>ww', ':w<cr>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<Leader>wq', ':wq<cr>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<Leader>qq', ':q!<cr>', {noremap = true})
+
+vim.api.nvim_set_keymap('n', '<C-j>', ':bnext<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-x>', ':bd<cr>', {noremap = true})
