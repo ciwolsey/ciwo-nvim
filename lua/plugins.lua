@@ -25,7 +25,7 @@ return require('packer').startup(function()
     use 'ray-x/lsp_signature.nvim'
 
     -- movement
-    -- use 'ggandor/lightspeed.nvim'
+    use 'ggandor/lightspeed.nvim'
 
     -- autopairs
     use 'windwp/nvim-autopairs'
@@ -65,5 +65,8 @@ return require('packer').startup(function()
         requires = {"nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
         "MunifTanjim/nui.nvim"}
     }
+
+    use { 'mhartington/formatter.nvim' }
+
 
 end)
