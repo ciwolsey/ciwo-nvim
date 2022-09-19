@@ -14,6 +14,7 @@ vim.cmd [[
 	set softtabstop=4
 	set shiftwidth=4
 	set noet
+	set nowrap
 	inoremap jj <ESC>
 ]]
 

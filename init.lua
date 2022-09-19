@@ -92,7 +92,7 @@ local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protoco
 -- Treesitter-textobjects
 require("neovide-conf")
 require("sets-conf")
-require("rusttools-conf")
+--require("rusttools-conf")
 require("treesitter-conf")
 require("lualine-conf")
 require("neotree-conf")
