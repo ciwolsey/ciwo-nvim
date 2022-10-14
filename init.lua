@@ -18,3 +18,9 @@ require("lualine-conf")
 require("neotree-conf")
 require("keymaps-conf")
 require("formatter-conf")
+require("cmp-conf")
+
+-- Leap
+require('leap').setup {}
+require('leap').add_default_mappings()
+require('leap').init_highlight(true)
